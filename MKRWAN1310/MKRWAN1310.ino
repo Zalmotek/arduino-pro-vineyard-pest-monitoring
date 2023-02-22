@@ -6,7 +6,7 @@
 #define NUMPIXELS 12
 
 unsigned long previousMillis = 0;
-const long interval = 30000;  // 30 second interval
+const long interval = 15000;  // 15 second interval
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -36,7 +36,10 @@ void setup() {
   ArduinoCloud.printDebugInfo();
 
   for (int i = 0; i < NUMPIXELS; i++) {  // For each pixel...
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Here we're using a moderately bright green color:
     pixels.setPixelColor(i, pixels.Color(250, 250, 250));
+    // Send the updated pixel colors to the hardware.
   }
   pixels.show();
 }
@@ -46,6 +49,7 @@ void loop() {
 
   if (Serial1.available()) {
     bugsCount = Serial1.parseInt();
+    Serial.println(bugsCount);
   }
 
   if (currentMillis - previousMillis >= interval) {

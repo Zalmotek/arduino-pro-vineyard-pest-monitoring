@@ -1,7 +1,7 @@
 # Edge Impulse - OpenMV Object Detection Example
 
 import sensor, image, time, os, tf, math, uos, gc
-from pyb import UART
+from pyb import UART, delay
 
 sensor.reset()                         # Reset and initialize the sensor.
 sensor.set_pixformat(sensor.RGB565)    # Set pixel format to RGB565 (or GRAYSCALE)
@@ -52,14 +52,17 @@ while(True):
         if (i == 0): continue # background class
         if (len(detection_list) == 0): continue # no detections for this class?
 
-        print("********** %s **********" % labels[i])
+        #print("********** %s **********" % labels[i])
         for d in detection_list:
             [x, y, w, h] = d.rect()
             center_x = math.floor(x + (w / 2))
             center_y = math.floor(y + (h / 2))
-            print('x %d\ty %d' % (center_x, center_y))
+            #print('x %d\ty %d' % (center_x, center_y))
             img.draw_circle((center_x, center_y, 12), color=colors[i], thickness=2)
 
     uart.write(str(len(detection_list)))
-    print(clock.fps(), "fps", end="\n\n")
+    delay(1000)
+
+    print(len(detection_list))
+    #print(clock.fps(), "fps", end="\n\n")
 

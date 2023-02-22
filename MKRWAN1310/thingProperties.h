@@ -14,8 +14,7 @@ int bugsCount;
 
 void initProperties(){
   ArduinoCloud.setThingId(THING_ID);
-  ArduinoCloud.addProperty(bugsCount, 1, READ, ON_CHANGE, NULL);
-
+  ArduinoCloud.addProperty(bugsCount, 1, READ, 15 * SECONDS, NULL);
 }
 
 LoRaConnectionHandler ArduinoIoTPreferredConnection(APPEUI, APPKEY, _lora_band::EU868);
