@@ -7,6 +7,7 @@
 
 unsigned long previousMillis = 0;
 const long interval = 15000;  // 15 second interval
+int bugsCountNicla;
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -48,8 +49,11 @@ void loop() {
   unsigned long currentMillis = millis();
 
   if (Serial1.available()) {
-    bugsCount = Serial1.parseInt();
-    Serial.println(bugsCount);
+    bugsCountNicla = Serial1.parseInt();
+    if (bugsCountNicla < 100) { // needed to remove wrong readings
+      bugsCount = bugsCountNicla;
+      Serial.println(bugsCount);
+    }
   }
 
   if (currentMillis - previousMillis >= interval) {
